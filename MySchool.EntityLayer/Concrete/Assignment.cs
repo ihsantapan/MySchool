@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MySchool.EntityLayer.Concrete
 {
-    public class Assigment
+    public class Assignment
     {
         public int AssigmentId { get; set; }
         public string Title { get; set; }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MySchool.DataAccessLayer.EntityFramework
 {
-    public class EFAssigmentDal : GenericRepository<Assigment>, IAssigmentDal
+    public class EFAssigmentDal : GenericRepository<Assignment>, IAssigmentDal
     {
         public EFAssigmentDal(MySchoolDbContext context) : base(context)
         {

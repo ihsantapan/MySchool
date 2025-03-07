@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySchool.DataAccessLayer", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySchool.DtoLayer", "MySchool.DtoLayer\MySchool.DtoLayer.csproj", "{B4196073-AC0A-4A8E-9D65-5238104C077F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySchool.BuisnessLayer", "MySchool.BuisnessLayer\MySchool.BuisnessLayer.csproj", "{740436E7-C73C-49FC-B0A0-64831D26FB8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySchool.WebApi", "MySchool.WebApi\MySchool.WebApi.csproj", "{08F436B8-D48E-4C44-BF9F-D90BE03CDB1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{B4196073-AC0A-4A8E-9D65-5238104C077F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4196073-AC0A-4A8E-9D65-5238104C077F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4196073-AC0A-4A8E-9D65-5238104C077F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{740436E7-C73C-49FC-B0A0-64831D26FB8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{740436E7-C73C-49FC-B0A0-64831D26FB8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{740436E7-C73C-49FC-B0A0-64831D26FB8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{740436E7-C73C-49FC-B0A0-64831D26FB8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08F436B8-D48E-4C44-BF9F-D90BE03CDB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08F436B8-D48E-4C44-BF9F-D90BE03CDB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08F436B8-D48E-4C44-BF9F-D90BE03CDB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08F436B8-D48E-4C44-BF9F-D90BE03CDB1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

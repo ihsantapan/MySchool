@@ -16,6 +16,6 @@ namespace MySchool.EntityLayer.Concrete
 
         //Navigation Prop.
         public Student Student { get; set; }
-        public Assigment Assigment { get; set; }
+        public Assignment Assigment { get; set; }
     }
 }

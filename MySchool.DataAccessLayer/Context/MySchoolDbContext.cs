@@ -65,7 +65,7 @@ namespace MySchool.DataAccessLayer.Context
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Principal> Principals { get; set; }
         public DbSet<ExamResult> ExamResults { get; set; }
-        public DbSet<Assigment> Assigments { get; set; }
+        public DbSet<Assignment> Assigments { get; set; }
         public DbSet<AssignmentSubmission> AssignmentSubmissions { get; set; }
 
     }

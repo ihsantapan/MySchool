@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.DataAccessLayer.Abstract
+namespace MySchool.BuisnessLayer.Abstract
 {
-    public interface IAssigmentDal:IGenericDal<Assignment>
+    public interface IAssignmentService:IGenericService<Assignment>
     {
     }
 }

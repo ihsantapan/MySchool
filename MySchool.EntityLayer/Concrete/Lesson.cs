@@ -19,6 +19,6 @@ namespace MySchool.EntityLayer.Concrete
         public List<Student> Students { get; set; } = new List<Student>();
         public List<Teacher> Teachers { get; set; } = new List<Teacher>();
         public List<Exam> Exams { get; set; } = new List<Exam>();
-        public List<Assigment> Assigments { get; set; } = new List<Assigment>();
+        public List<Assignment> Assigments { get; set; } = new List<Assignment>();
     }
 }
