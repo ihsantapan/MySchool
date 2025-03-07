@@ -8,6 +8,7 @@ namespace MySchool.DtoLayer.Dtos.School
 {
     public class SchoolUpdateDto
     {
+        public int SchoolId { get; set; }
         public string SchoolName { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }

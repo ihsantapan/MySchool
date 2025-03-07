@@ -1,5 +1,7 @@
-﻿using MySchool.BuisnessLayer.Abstract;
+﻿using AutoMapper;
+using MySchool.BuisnessLayer.Abstract;
 using MySchool.DataAccessLayer.Abstract;
+using MySchool.DtoLayer.Dtos.TeacherDtos;
 using MySchool.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -12,35 +14,42 @@ namespace MySchool.BuisnessLayer.Concrete
     public class TeacherManager : ITeacherService
     {
         private readonly ITeacherDal _teacherDal;
+        private readonly IMapper _mapper;
 
-        public TeacherManager(ITeacherDal teacherDal)
+        public TeacherManager(ITeacherDal teacherDal, IMapper mapper)
         {
             _teacherDal = teacherDal;
+            _mapper = mapper;
         }
 
-        public List<Teacher> GetAll()
+        public async Task<List<TeacherResultDto>> GetAllAsync()
         {
-            return _teacherDal.GetAll();
+            var values = await _teacherDal.GetAllAsync();
+            return _mapper.Map<List<TeacherResultDto>>(values);
         }
 
-        public Teacher GetById(int id)
+        public async Task<TeacherGetByIdDto> GetByIdAsync(int id)
         {
-            return _teacherDal.GetById(id);
+            var values = await _teacherDal.GetByIdAsync(id);
+            return _mapper.Map<TeacherGetByIdDto>(values);
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _teacherDal.Delete(id);
+            await _teacherDal.DeleteAsync(id);
         }
 
-        public void TInsert(Teacher entity)
+        public async Task TInsertAsync(TeacherCreateDto teacherCreateDto)
         {
-            _teacherDal.Insert(entity);
+            var value = _mapper.Map<Teacher>(teacherCreateDto);
+            await _teacherDal.InsertAsync(value);
+
         }
 
-        public void TUpdate(Teacher entity)
+        public async Task TUpdateAsync(TeacherUpdateDto teacherUpdateDto)
         {
-            _teacherDal.Update(entity);
+            var value = _mapper.Map<Teacher>(teacherUpdateDto);
+            await _teacherDal.UpdateAsync(value);
         }
     }
 }

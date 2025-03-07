@@ -1,5 +1,8 @@
-﻿using MySchool.BuisnessLayer.Abstract;
+﻿using AutoMapper;
+using MySchool.BuisnessLayer.Abstract;
 using MySchool.DataAccessLayer.Abstract;
+using MySchool.DtoLayer.Dtos.School;
+using MySchool.DtoLayer.Dtos.SchoolDtos;
 using MySchool.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -12,36 +15,42 @@ namespace MySchool.BuisnessLayer.Concrete
     public class SchoolManager : ISchoolService
     {
         private readonly ISchoolDal _schoolDal;
+        private readonly IMapper _mapper;
 
-
-        public SchoolManager(ISchoolDal schoolDal)
+        public SchoolManager(ISchoolDal schoolDal, IMapper mapper)
         {
             _schoolDal = schoolDal;
+            _mapper = mapper;
         }
 
-        public List<School> GetAll()
+        public async Task<List<SchoolResultDto>> GetAllAsync()
         {
-            return _schoolDal.GetAll();
+            var values = await _schoolDal.GetAllAsync();
+            return _mapper.Map<List<SchoolResultDto>>(values);
         }
 
-        public School GetById(int id)
+        public async Task<SchoolGetByIdDto> GetByIdAsync(int id)
         {
-            return _schoolDal.GetById(id);
+            var values= await _schoolDal.GetByIdAsync(id);
+            return _mapper.Map<SchoolGetByIdDto>(values);
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _schoolDal.Delete(id);
+            await _schoolDal.DeleteAsync(id);
         }
 
-        public void TInsert(School entity)
+        public async Task TInsertAsync(SchoolCreateDto schoolCreateDto)
         {
-            _schoolDal.Insert(entity);
+            var value=_mapper.Map<School>(schoolCreateDto);
+            await _schoolDal.InsertAsync(value);
+
         }
 
-        public void TUpdate(School entity)
+        public async Task TUpdateAsync(SchoolUpdateDto schoolUpdateDto)
         {
-            _schoolDal.Update(entity);
+            var value = _mapper.Map<School>(schoolUpdateDto);
+            await _schoolDal.UpdateAsync(value);
         }
     }
 }

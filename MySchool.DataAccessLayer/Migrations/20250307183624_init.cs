@@ -136,7 +136,7 @@ namespace MySchool.DataAccessLayer.Migrations
                 name: "Assigments",
                 columns: table => new
                 {
-                    AssigmentId = table.Column<int>(type: "int", nullable: false)
+                    AssignmentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -144,7 +144,7 @@ namespace MySchool.DataAccessLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assigments", x => x.AssigmentId);
+                    table.PrimaryKey("PK_Assigments", x => x.AssignmentId);
                     table.ForeignKey(
                         name: "FK_Assigments_Lessons_LessonId",
                         column: x => x.LessonId,
@@ -231,7 +231,7 @@ namespace MySchool.DataAccessLayer.Migrations
                     AssigmentId = table.Column<int>(type: "int", nullable: false),
                     FileUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AssigmentScore = table.Column<double>(type: "float", nullable: false),
-                    AssigmentId1 = table.Column<int>(type: "int", nullable: true),
+                    AssignmentId = table.Column<int>(type: "int", nullable: true),
                     StudentId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -241,13 +241,13 @@ namespace MySchool.DataAccessLayer.Migrations
                         name: "FK_AssignmentSubmissions_Assigments_AssigmentId",
                         column: x => x.AssigmentId,
                         principalTable: "Assigments",
-                        principalColumn: "AssigmentId",
+                        principalColumn: "AssignmentId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AssignmentSubmissions_Assigments_AssigmentId1",
-                        column: x => x.AssigmentId1,
+                        name: "FK_AssignmentSubmissions_Assigments_AssignmentId",
+                        column: x => x.AssignmentId,
                         principalTable: "Assigments",
-                        principalColumn: "AssigmentId");
+                        principalColumn: "AssignmentId");
                     table.ForeignKey(
                         name: "FK_AssignmentSubmissions_Students_StudentId",
                         column: x => x.StudentId,
@@ -299,9 +299,9 @@ namespace MySchool.DataAccessLayer.Migrations
                 column: "AssigmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AssignmentSubmissions_AssigmentId1",
+                name: "IX_AssignmentSubmissions_AssignmentId",
                 table: "AssignmentSubmissions",
-                column: "AssigmentId1");
+                column: "AssignmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AssignmentSubmissions_StudentId",

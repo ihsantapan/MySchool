@@ -12,7 +12,7 @@ using MySchool.DataAccessLayer.Context;
 namespace MySchool.DataAccessLayer.Migrations
 {
     [DbContext(typeof(MySchoolDbContext))]
-    [Migration("20250307094944_init")]
+    [Migration("20250307183624_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -55,13 +55,13 @@ namespace MySchool.DataAccessLayer.Migrations
                     b.ToTable("LessonTeacher");
                 });
 
-            modelBuilder.Entity("MySchool.EntityLayer.Concrete.Assigment", b =>
+            modelBuilder.Entity("MySchool.EntityLayer.Concrete.Assignment", b =>
                 {
-                    b.Property<int>("AssigmentId")
+                    b.Property<int>("AssignmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssigmentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssignmentId"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -74,7 +74,7 @@ namespace MySchool.DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AssigmentId");
+                    b.HasKey("AssignmentId");
 
                     b.HasIndex("LessonId");
 
@@ -92,11 +92,11 @@ namespace MySchool.DataAccessLayer.Migrations
                     b.Property<int>("AssigmentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AssigmentId1")
-                        .HasColumnType("int");
-
                     b.Property<double>("AssigmentScore")
                         .HasColumnType("float");
+
+                    b.Property<int?>("AssignmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("FileUrl")
                         .IsRequired()
@@ -112,7 +112,7 @@ namespace MySchool.DataAccessLayer.Migrations
 
                     b.HasIndex("AssigmentId");
 
-                    b.HasIndex("AssigmentId1");
+                    b.HasIndex("AssignmentId");
 
                     b.HasIndex("StudentId");
 
@@ -363,7 +363,7 @@ namespace MySchool.DataAccessLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySchool.EntityLayer.Concrete.Assigment", b =>
+            modelBuilder.Entity("MySchool.EntityLayer.Concrete.Assignment", b =>
                 {
                     b.HasOne("MySchool.EntityLayer.Concrete.Lesson", "Lesson")
                         .WithMany("Assigments")
@@ -376,15 +376,15 @@ namespace MySchool.DataAccessLayer.Migrations
 
             modelBuilder.Entity("MySchool.EntityLayer.Concrete.AssignmentSubmission", b =>
                 {
-                    b.HasOne("MySchool.EntityLayer.Concrete.Assigment", "Assigment")
+                    b.HasOne("MySchool.EntityLayer.Concrete.Assignment", "Assigment")
                         .WithMany()
                         .HasForeignKey("AssigmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MySchool.EntityLayer.Concrete.Assigment", null)
+                    b.HasOne("MySchool.EntityLayer.Concrete.Assignment", null)
                         .WithMany("AssignmentSubmissions")
-                        .HasForeignKey("AssigmentId1");
+                        .HasForeignKey("AssignmentId");
 
                     b.HasOne("MySchool.EntityLayer.Concrete.Student", "Student")
                         .WithMany()
@@ -486,7 +486,7 @@ namespace MySchool.DataAccessLayer.Migrations
                     b.Navigation("School");
                 });
 
-            modelBuilder.Entity("MySchool.EntityLayer.Concrete.Assigment", b =>
+            modelBuilder.Entity("MySchool.EntityLayer.Concrete.Assignment", b =>
                 {
                     b.Navigation("AssignmentSubmissions");
                 });

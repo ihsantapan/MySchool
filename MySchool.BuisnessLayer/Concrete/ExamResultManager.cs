@@ -1,5 +1,7 @@
-﻿using MySchool.BuisnessLayer.Abstract;
+﻿using AutoMapper;
+using MySchool.BuisnessLayer.Abstract;
 using MySchool.DataAccessLayer.Abstract;
+using MySchool.DtoLayer.Dtos.ExamResultDtos;
 using MySchool.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -7,40 +9,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.BuisnessLayer.Concrete
+namespace MyExamResult.BuisnessLayer.Concrete
 {
     public class ExamResultManager : IExamResultService
     {
         private readonly IExamResultDal _examResultDal;
+        private readonly IMapper _mapper;
 
-        public ExamResultManager(IExamResultDal examResultDal)
+        public ExamResultManager(IExamResultDal ExamResultDal, IMapper mapper)
         {
-            _examResultDal = examResultDal;
+            _examResultDal = ExamResultDal;
+            _mapper = mapper;
         }
 
-        public List<ExamResult> GetAll()
+        public async Task<List<ExamResultResultDto>> GetAllAsync()
         {
-            return _examResultDal.GetAll();
+            var values = await _examResultDal.GetAllAsync();
+            return _mapper.Map<List<ExamResultResultDto>>(values);
         }
 
-        public ExamResult GetById(int id)
+        public async Task<ExamResultGetByIdDto> GetByIdAsync(int id)
         {
-            return _examResultDal.GetById(id);
+            var values = await _examResultDal.GetByIdAsync(id);
+            return _mapper.Map<ExamResultGetByIdDto>(values);
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _examResultDal.Delete(id);
+            await _examResultDal.DeleteAsync(id);
         }
 
-        public void TInsert(ExamResult entity)
+        public async Task TInsertAsync(ExamResultCreateDto examResultCreateDto)
         {
-            _examResultDal.Insert(entity);
+            var value = _mapper.Map<ExamResult>(examResultCreateDto);
+            await _examResultDal.InsertAsync(value);
+
         }
 
-        public void TUpdate(ExamResult entity)
+        public async Task TUpdateAsync(ExamResultUpdateDto examResultUpdateDto)
         {
-            _examResultDal.Update(entity);
+            var value = _mapper.Map<ExamResult>(examResultUpdateDto);
+            await _examResultDal.UpdateAsync(value);
         }
     }
 }

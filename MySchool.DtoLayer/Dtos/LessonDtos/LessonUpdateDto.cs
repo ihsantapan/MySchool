@@ -8,6 +8,7 @@ namespace MySchool.DtoLayer.Dtos.LessonDtos
 {
     public class LessonUpdateDto
     {
+        public int LessonId { get; set; }
         public string LessonName { get; set; }
         public int ClassId { get; set; }
     }

@@ -1,5 +1,8 @@
-﻿using MySchool.BuisnessLayer.Abstract;
+﻿using AutoMapper;
+using MyAssignment.BuisnessLayer.Abstract;
 using MySchool.DataAccessLayer.Abstract;
+using MySchool.DtoLayer.Dtos.Assigment;
+using MySchool.DtoLayer.Dtos.AssigmentDtos;
 using MySchool.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -7,40 +10,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.BuisnessLayer.Concrete
+namespace MyAssignment.BuisnessLayer.Concrete
 {
     public class AssignmentManager : IAssignmentService
     {
-        private readonly IAssigmentDal _assigmentDal;
+        private readonly IAssignmentDal _assignmentDal;
+        private readonly IMapper _mapper;
 
-        public AssignmentManager(IAssigmentDal assigmentDal)
+        public AssignmentManager(IAssignmentDal AssignmentDal, IMapper mapper)
         {
-            _assigmentDal = assigmentDal;
+            _assignmentDal = AssignmentDal;
+            _mapper = mapper;
         }
 
-        public List<Assignment> GetAll()
+        public async Task<List<AssignmentResultDto>> GetAllAsync()
         {
-            return _assigmentDal.GetAll();
+            var values = await _assignmentDal.GetAllAsync();
+            return _mapper.Map<List<AssignmentResultDto>>(values);
         }
 
-        public Assignment GetById(int id)
+        public async Task<AssignmentGetByIdDto> GetByIdAsync(int id)
         {
-            return _assigmentDal.GetById(id);
+            var values = await _assignmentDal.GetByIdAsync(id);
+            return _mapper.Map<AssignmentGetByIdDto>(values);
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _assigmentDal.Delete(id);
+            await _assignmentDal.DeleteAsync(id);
         }
 
-        public void TInsert(Assignment entity)
+        public async Task TInsertAsync(AssignmentCreateDto assignmentCreateDto)
         {
-            _assigmentDal.Insert(entity);
+            var value = _mapper.Map<Assignment>(assignmentCreateDto);
+            await _assignmentDal.InsertAsync(value);
+
         }
 
-        public void TUpdate(Assignment entity)
+        public async Task TUpdateAsync(AssignmentUpdateDto assignmentUpdateDto)
         {
-            _assigmentDal.Update(entity);
+            var value = _mapper.Map<Assignment>(assignmentUpdateDto);
+            await _assignmentDal.UpdateAsync(value);
         }
     }
 }

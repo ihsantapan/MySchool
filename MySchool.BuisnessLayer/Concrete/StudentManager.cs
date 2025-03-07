@@ -1,46 +1,56 @@
-﻿using MySchool.BuisnessLayer.Abstract;
+﻿using AutoMapper;
+using MyStudent.BuisnessLayer.Abstract;
 using MySchool.DataAccessLayer.Abstract;
+using MySchool.DtoLayer.Dtos.StudentDtos;
 using MySchool.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySchool.BuisnessLayer.Concrete;
 
-namespace MySchool.BuisnessLayer.Concrete
+namespace MyStudent.BuisnessLayer.Concrete
 {
     public class StudentManager : IStudentService
     {
         private readonly IStudentDal _studentDal;
+        private readonly IMapper _mapper;
 
-        public StudentManager(IStudentDal studentDal)
+        public StudentManager(IStudentDal studentDal, IMapper mapper)
         {
             _studentDal = studentDal;
+            _mapper = mapper;
         }
 
-        public List<Student> GetAll()
+        public async Task<List<StudentResultDto>> GetAllAsync()
         {
-            return _studentDal.GetAll();
+            var values = await _studentDal.GetAllAsync();
+            return _mapper.Map<List<StudentResultDto>>(values);
         }
 
-        public Student GetById(int id)
+        public async Task<StudentGetByIdDto> GetByIdAsync(int id)
         {
-            return _studentDal.GetById(id);
+            var values = await _studentDal.GetByIdAsync(id);
+            return _mapper.Map<StudentGetByIdDto>(values);
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _studentDal.Delete(id);
+            await _studentDal.DeleteAsync(id);
         }
 
-        public void TInsert(Student entity)
+        public async Task TInsertAsync(StudentCreateDto studentCreateDto)
         {
-            _studentDal.Insert(entity);
+            var value = _mapper.Map<Student>(studentCreateDto);
+            await _studentDal.InsertAsync(value);
+
         }
 
-        public void TUpdate(Student entity)
+        public async Task TUpdateAsync(StudentUpdateDto studentUpdateDto)
         {
-            _studentDal.Update(entity);
+            var value = _mapper.Map<Student>(studentUpdateDto);
+            await _studentDal.UpdateAsync(value);
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using MySchool.BuisnessLayer.Abstract;
+﻿using AutoMapper;
+using MySchool.BuisnessLayer.Abstract;
 using MySchool.DataAccessLayer.Abstract;
+using MySchool.DtoLayer.Dtos.Class;
+using MySchool.DtoLayer.Dtos.ClassDtos;
 using MySchool.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -7,40 +10,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.BuisnessLayer.Concrete
+namespace MyClass.BuisnessLayer.Concrete
 {
     public class ClassManager : IClassService
     {
         private readonly IClassDal _classDal;
+        private readonly IMapper _mapper;
 
-        public ClassManager(IClassDal classDal)
+        public ClassManager(IClassDal ClassDal, IMapper mapper)
         {
-            _classDal = classDal;
+            _classDal = ClassDal;
+            _mapper = mapper;
         }
 
-        public List<Class> GetAll()
+        public async Task<List<ClassResultDto>> GetAllAsync()
         {
-            return _classDal.GetAll();
+            var values = await _classDal.GetAllAsync();
+            return _mapper.Map<List<ClassResultDto>>(values);
         }
 
-        public Class GetById(int id)
+        public async Task<ClassGetByIdDto> GetByIdAsync(int id)
         {
-            return _classDal.GetById(id);
+            var values = await _classDal.GetByIdAsync(id);
+            return _mapper.Map<ClassGetByIdDto>(values);
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _classDal.Delete(id);
+            await _classDal.DeleteAsync(id);
         }
 
-        public void TInsert(Class entity)
+        public async Task TInsertAsync(ClassCreateDto classCreateDto)
         {
-            _classDal.Insert(entity);
+            var value = _mapper.Map<Class>(classCreateDto);
+            await _classDal.InsertAsync(value);
+
         }
 
-        public void TUpdate(Class entity)
+        public async Task TUpdateAsync(ClassUpdateDto classUpdateDto)
         {
-            _classDal.Update(entity);
+            var value = _mapper.Map<Class>(classUpdateDto);
+            await _classDal.UpdateAsync(value);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using MySchool.BuisnessLayer.Abstract;
+﻿using AutoMapper;
+using MySchool.BuisnessLayer.Abstract;
 using MySchool.DataAccessLayer.Abstract;
+using MySchool.DtoLayer.Dtos.ExamDtos;
 using MySchool.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -9,38 +11,45 @@ using System.Threading.Tasks;
 
 namespace MySchool.BuisnessLayer.Concrete
 {
-    public class ExamManager : IExamService
+    public class  ExamManager : IExamService
     {
         private readonly IExamDal _examDal;
+        private readonly IMapper _mapper;
 
-        public ExamManager(IExamDal examDal)
+        public ExamManager(IExamDal ExamDal, IMapper mapper)
         {
-            _examDal = examDal;
+            _examDal = ExamDal;
+            _mapper = mapper;
         }
 
-        public List<Exam> GetAll()
+        public async Task<List<ExamResultDto>> GetAllAsync()
         {
-            return _examDal.GetAll();
+            var values = await _examDal.GetAllAsync();
+            return _mapper.Map<List<ExamResultDto>>(values);
         }
 
-        public Exam GetById(int id)
+        public async Task<ExamGetByIdDto> GetByIdAsync(int id)
         {
-            return _examDal.GetById(id);
+            var values = await _examDal.GetByIdAsync(id);
+            return _mapper.Map<ExamGetByIdDto>(values);
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _examDal.Delete(id);
+            await _examDal.DeleteAsync(id);
         }
 
-        public void TInsert(Exam entity)
+        public async Task TInsertAsync(ExamCreateDto examCreateDto)
         {
-            _examDal.Insert(entity);
+            var value = _mapper.Map<Exam>(examCreateDto);
+            await _examDal.InsertAsync(value);
+
         }
 
-        public void TUpdate(Exam entity)
+        public async Task TUpdateAsync(ExamUpdateDto examUpdateDto)
         {
-            _examDal.Update(entity);
+            var value = _mapper.Map<Exam>(examUpdateDto);
+            await _examDal.UpdateAsync(value);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MySchool.DataAccessLayer.Abstract
 {
-    public interface IAssigmentSubmissionDal:IGenericDal<AssignmentSubmission>
+    public interface IAssignmentDal:IGenericDal<Assignment>
     {
     }
 }

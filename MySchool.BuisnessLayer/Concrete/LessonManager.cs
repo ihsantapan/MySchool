@@ -1,5 +1,7 @@
-﻿using MySchool.BuisnessLayer.Abstract;
+﻿using AutoMapper;
+using MyLesson.BuisnessLayer.Abstract;
 using MySchool.DataAccessLayer.Abstract;
+using MySchool.DtoLayer.Dtos.LessonDtos;
 using MySchool.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -7,40 +9,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.BuisnessLayer.Concrete
+namespace MyLesson.BuisnessLayer.Concrete
 {
     public class LessonManager : ILessonService
     {
         private readonly ILessonDal _lessonDal;
+        private readonly IMapper _mapper;
 
-        public LessonManager(ILessonDal lessonDal)
+        public LessonManager(ILessonDal lessonDal, IMapper mapper)
         {
             _lessonDal = lessonDal;
+            _mapper = mapper;
         }
 
-        public List<Lesson> GetAll()
+        public async Task<List<LessonResultDto>> GetAllAsync()
         {
-            return _lessonDal.GetAll();
+            var values = await _lessonDal.GetAllAsync();
+            return _mapper.Map<List<LessonResultDto>>(values);
         }
 
-        public Lesson GetById(int id)
+        public async Task<LessonGetByIdDto> GetByIdAsync(int id)
         {
-            return _lessonDal.GetById(id);
+            var values = await _lessonDal.GetByIdAsync(id);
+            return _mapper.Map<LessonGetByIdDto>(values);
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _lessonDal.Delete(id);
+            await _lessonDal.DeleteAsync(id);
         }
 
-        public void TInsert(Lesson entity)
+        public async Task TInsertAsync(LessonCreateDto lessonCreateDto)
         {
-            _lessonDal.Insert(entity);
+            var value = _mapper.Map<Lesson>(lessonCreateDto);
+            await _lessonDal.InsertAsync(value);
+
         }
 
-        public void TUpdate(Lesson entity)
+        public async Task TUpdateAsync(LessonUpdateDto lessonUpdateDto)
         {
-            _lessonDal.Update(entity);
+            var value = _mapper.Map<Lesson>(lessonUpdateDto);
+            await _lessonDal.UpdateAsync(value);
         }
     }
 }

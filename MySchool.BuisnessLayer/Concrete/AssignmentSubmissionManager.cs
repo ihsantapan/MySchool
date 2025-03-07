@@ -1,5 +1,8 @@
-﻿using MySchool.BuisnessLayer.Abstract;
+﻿using AutoMapper;
+using MySchool.BuisnessLayer.Abstract;
 using MySchool.DataAccessLayer.Abstract;
+using MySchool.DtoLayer.Dtos.AssignmentSubmission;
+using MySchool.DtoLayer.Dtos.AssignmentSubmissionDtos;
 using MySchool.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -7,40 +10,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.BuisnessLayer.Concrete
+namespace MyAssignmentSubmission.BuisnessLayer.Concrete
 {
     public class AssignmentSubmissionManager : IAssignmentSubmissionService
     {
-        private readonly IAssigmentSubmissionDal _assigmentSubmissionDal;
+        private readonly IAssignmentSubmissionDal _assignmentSubmissionDal;
+        private readonly IMapper _mapper;
 
-        public AssignmentSubmissionManager(IAssigmentSubmissionDal assigmentSubmissionDal)
+        public AssignmentSubmissionManager(IAssignmentSubmissionDal AssignmentSubmissionDal, IMapper mapper)
         {
-            _assigmentSubmissionDal = assigmentSubmissionDal;
+            _assignmentSubmissionDal = AssignmentSubmissionDal;
+            _mapper = mapper;
         }
 
-        public List<AssignmentSubmission> GetAll()
+        public async Task<List<AssignmentSubmissionResultDto>> GetAllAsync()
         {
-            return _assigmentSubmissionDal.GetAll();
+            var values = await _assignmentSubmissionDal.GetAllAsync();
+            return _mapper.Map<List<AssignmentSubmissionResultDto>>(values);
         }
 
-        public AssignmentSubmission GetById(int id)
+        public async Task<AssignmentSubmissionGetByIdDto> GetByIdAsync(int id)
         {
-            return _assigmentSubmissionDal.GetById(id);
+            var values = await _assignmentSubmissionDal.GetByIdAsync(id);
+            return _mapper.Map<AssignmentSubmissionGetByIdDto>(values);
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _assigmentSubmissionDal.Delete(id);
+            await _assignmentSubmissionDal.DeleteAsync(id);
         }
 
-        public void TInsert(AssignmentSubmission entity)
+        public async Task TInsertAsync(AssignmentSubmissionCreateDto assignmentSubmissionCreateDto)
         {
-            _assigmentSubmissionDal.Insert(entity);
+            var value = _mapper.Map<AssignmentSubmission>(assignmentSubmissionCreateDto);
+            await _assignmentSubmissionDal.InsertAsync(value);
+
         }
 
-        public void TUpdate(AssignmentSubmission entity)
+        public async Task TUpdateAsync(AssignmentSubmissionUpdateDto assignmentSubmissionUpdateDto)
         {
-            _assigmentSubmissionDal.Update(entity);
+            var value = _mapper.Map<AssignmentSubmission>(assignmentSubmissionUpdateDto);
+            await _assignmentSubmissionDal.UpdateAsync(value);
         }
     }
 }

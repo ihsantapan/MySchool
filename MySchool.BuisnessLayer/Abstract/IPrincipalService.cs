@@ -1,13 +1,18 @@
-﻿using MySchool.EntityLayer.Concrete;
+﻿using MySchool.DtoLayer.Dtos.PrincipalDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.BuisnessLayer.Abstract
+namespace MyPrincipal.BuisnessLayer.Abstract
 {
-    public interface IPrincipalService : IGenericService<Principal>
+    public interface IPrincipalService 
     {
+        Task TInsertAsync(PrincipalCreateDto principalCreateDto);
+        Task TUpdateAsync(PrincipalUpdateDto principalUpdateDto);
+        Task TDeleteAsync(int id);
+        Task<PrincipalGetByIdDto> GetByIdAsync(int id);
+        Task<List<PrincipalResultDto>> GetAllAsync();
     }
 }

@@ -1,5 +1,7 @@
-﻿using MySchool.BuisnessLayer.Abstract;
+﻿using AutoMapper;
+using MyPrincipal.BuisnessLayer.Abstract;
 using MySchool.DataAccessLayer.Abstract;
+using MySchool.DtoLayer.Dtos.PrincipalDtos;
 using MySchool.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -7,40 +9,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.BuisnessLayer.Concrete
+namespace MyPrincipal.BuisnessLayer.Concrete
 {
     public class PrincipalManager : IPrincipalService
     {
         private readonly IPrincipalDal _principalDal;
+        private readonly IMapper _mapper;
 
-        public PrincipalManager(IPrincipalDal principalDal)
+        public PrincipalManager(IPrincipalDal principalDal, IMapper mapper)
         {
             _principalDal = principalDal;
+            _mapper = mapper;
         }
 
-        public List<Principal> GetAll()
+        public async Task<List<PrincipalResultDto>> GetAllAsync()
         {
-            return _principalDal.GetAll();
+            var values = await _principalDal.GetAllAsync();
+            return _mapper.Map<List<PrincipalResultDto>>(values);
         }
 
-        public Principal GetById(int id)
+        public async Task<PrincipalGetByIdDto> GetByIdAsync(int id)
         {
-            return _principalDal.GetById(id);
+            var values = await _principalDal.GetByIdAsync(id);
+            return _mapper.Map<PrincipalGetByIdDto>(values);
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _principalDal.Delete(id);
+            await _principalDal.DeleteAsync(id);
         }
 
-        public void TInsert(Principal entity)
+        public async Task TInsertAsync(PrincipalCreateDto principalCreateDto)
         {
-            _principalDal.Insert(entity);
+            var value = _mapper.Map<Principal>(principalCreateDto);
+            await _principalDal.InsertAsync(value);
+
         }
 
-        public void TUpdate(Principal entity)
+        public async Task TUpdateAsync(PrincipalUpdateDto principalUpdateDto)
         {
-            _principalDal.Update(entity);
+            var value = _mapper.Map<Principal>(principalUpdateDto);
+            await _principalDal.UpdateAsync(value);
         }
     }
 }
