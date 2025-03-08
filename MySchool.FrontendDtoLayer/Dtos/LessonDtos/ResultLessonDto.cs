@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.DtoLayer.Dtos.LessonDtos
+namespace MySchool.FrontendDtoLayer.Dtos.LessonDtos
 {
-    public class LessonResultDto
+    public class ResultLessonDto
     {
         public int LessonId { get; set; }
         public string LessonName { get; set; }

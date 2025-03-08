@@ -1,0 +1,29 @@
+﻿@model CreateLessonDto
+@{
+    ViewData["Title"] = "CreateLesson";
+    Layout = "~/Areas/Director/Views/DirectorLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ders Ekleme Sayfası</h4>
+                <p>Ders ekleme işlemleri aşağıdaki panel üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="bordered-table">
+
+                    <form method="post">
+                        <label>Ders Adı</label>
+                        <input type="text" class="form-control" asp-for="LessonName" />
+                        <label>Sınıf  ID</label>
+                        <input type="text" class="form-control" asp-for="ClassId" />
+                        <br />
+                        <button class="btn btn-primary">Ders Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+

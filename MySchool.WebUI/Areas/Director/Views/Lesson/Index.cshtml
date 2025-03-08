@@ -1,0 +1,47 @@
+﻿@model List<ResultLessonDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Director/Views/DirectorLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ders Listesi</h4>
+                <p>Ders ile ilgili işlemleri aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="bordered-table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Ders ID</th>
+                                <th>Ders Adı</th>
+                                <th>Sınıf ID</th>                              
+                                <th>Sil</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.LessonId</td>
+                                    <td>@item.LessonName</td>
+                                    <td>@item.ClassId</td>                                    
+                                    <td><a href="/Director/Lesson/DeleteLesson/@item.LessonId" class="btn btn-warning">Sil</a></td>
+                                    <td><a href="/Director/Lesson/UpdateLesson/@item.LessonId" class="btn btn-danger">Güncelle</a></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                    <a href="/Director/Lesson/CreateLesson" class="btn btn-primary">Yeni Ders Ekle</a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
