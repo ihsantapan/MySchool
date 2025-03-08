@@ -1,0 +1,31 @@
+﻿@model CreateAssignmentDto
+@{
+    ViewData["Title"] = "CreateAssignment";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ödev Ekleme Sayfası</h4>
+                <p>Ödev ekleme işlemleri aşağıdaki panel üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="bordered-table">
+
+                    <form method="post">
+                        <label>Ödev Konusu</label>
+                        <input type="text" class="form-control" asp-for="Title" />
+                        <label>Ödev Açıklaması</label>
+                        <input type="text" class="form-control" asp-for="Description" />
+                        <label>Ders ID</label>
+                        <input type="text" class="form-control" asp-for="LessonId" />
+                        <br />
+                        <button class="btn btn-primary">Ödev Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+

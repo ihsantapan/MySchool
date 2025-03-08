@@ -1,0 +1,35 @@
+﻿@model UpdateAssignmentDto
+@{
+    ViewData["Title"] = "UpdateAssignment";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ödev Güncelleme Sayfası</h4>
+                <p>Ödev güncelleme işlemini aşağıdaki panel üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="bordered-table">
+
+                    <form method="post">
+                        <input type="hidden" asp-for="AssignmentId" />
+
+                        <label>Ödev Konusu</label>
+                        <input type="text" class="form-control" asp-for="Title" />
+
+                        <label>Ödev Açıklaması</label>
+                        <input type="text" class="form-control" asp-for="Description" />
+
+                        <label>Ders ID</label>
+                        <input type="text" class="form-control" asp-for="LessonId" />
+                        <br />
+                        <button class="btn btn-primary">Ödev Güncelle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+

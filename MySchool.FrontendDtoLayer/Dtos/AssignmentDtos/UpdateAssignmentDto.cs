@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.DtoLayer.Dtos.AssigmentDtos
+namespace MySchool.FrontendDtoLayer.Dtos.AssignmentDtos
 {
-    public class AssignmentResultDto
+    public class UpdateAssignmentDto
     {
         public int AssignmentId { get; set; }
         public string Title { get; set; }

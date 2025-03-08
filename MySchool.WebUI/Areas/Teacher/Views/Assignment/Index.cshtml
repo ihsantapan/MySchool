@@ -1,0 +1,50 @@
+﻿@model List<ResultAssignmentDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ödev Listesi</h4>
+                <p>Ödevler ile ilgili işlemleri aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="bordered-table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Ödev ID</th>
+                                <th>Konu</th>
+                                <th>Açıklama</th>
+                                <th>Ders ID</th>
+
+                                <th>Sil</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.AssignmentId</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.LessonId</td>
+                                    <td><a href="/Teacher/Assignment/DeleteAssignment/@item.AssignmentId" class="btn btn-warning">Sil</a></td>
+                                    <td><a href="/Teacher/Assignment/UpdateAssignment/@item.AssignmentId" class="btn btn-danger">Güncelle</a></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                    <a href="/Teacher/Assignment/CreateAssignment" class="btn btn-primary">Yeni Ödev Ekle</a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
