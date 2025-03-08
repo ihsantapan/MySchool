@@ -8,6 +8,7 @@ namespace MySchool.DtoLayer.Dtos.ExamDtos
 {
     public class ExamGetByIdDto
     {
+        public int ExamId { get; set; }
         public string Title { get; set; }
         public int LessonId { get; set; }
     }
