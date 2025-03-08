@@ -1,0 +1,32 @@
+﻿@model UpdateClassDto
+@{
+    ViewData["Title"] = "UpdateClass";
+    Layout = "~/Areas/Director/Views/DirectorLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Sınıf Güncelleme Sayfası</h4>
+                <p>Sınıf güncelleme işlemini aşağıdaki panel üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="bordered-table">
+
+                    <form method="post">
+                        <input type="hidden" asp-for="ClassId" />
+                        
+                        <label>Sınıf Adı</label>
+                        <input type="text" class="form-control" asp-for="ClassName" />
+                        
+                        <label>Okul ID</label>
+                        <input type="text" class="form-control" asp-for="SchoolId" />
+                        <br />
+                        <button class="btn btn-primary">Sınıf Güncelle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+

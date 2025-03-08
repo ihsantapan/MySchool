@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.DtoLayer.Dtos.ClassDtos
+namespace MySchool.FrontendDtoLayer.Dtos.ClassDtos
 {
-    public class ClassGetByIdDto
+    public class ResultClassDto
     {
         public int ClassId { get; set; }
         public string ClassName { get; set; }
