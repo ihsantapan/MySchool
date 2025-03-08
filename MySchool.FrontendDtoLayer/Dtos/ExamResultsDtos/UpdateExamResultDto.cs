@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.DtoLayer.Dtos.ExamResultDtos
+namespace MySchool.FrontendDtoLayer.Dtos.ExamResultsDtos
 {
-    public class ExamResultResultDto
+    public class UpdateExamResultDto
     {
         public int ExamResultId { get; set; }
         public int StudentId { get; set; }

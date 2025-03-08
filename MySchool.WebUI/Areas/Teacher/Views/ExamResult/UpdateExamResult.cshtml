@@ -1,0 +1,35 @@
+﻿@model UpdateExamResultDto
+@{
+    ViewData["Title"] = "UpdateExamResult";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Sınav Sonucu Güncelleme Sayfası</h4>
+                <p>Sınav sonucu güncelleme işlemini aşağıdaki panel üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="bordered-table">
+
+                    <form method="post">
+                        <input type="hidden" asp-for="ExamResultId" />
+
+                        <label>Öğrenci Id</label>
+                        <input type="text" class="form-control" asp-for="StudentId" />
+
+                        <label>Sınav ID</label>
+                        <input type="text" class="form-control" asp-for="ExamId" />
+
+                        <label>Sınav Notu</label>
+                        <input type="text" class="form-control" asp-for="ExamScore" />
+                        <br />
+                        <button class="btn btn-primary">Sınav Sonucu Güncelle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+

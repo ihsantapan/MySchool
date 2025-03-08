@@ -8,6 +8,7 @@ namespace MySchool.DtoLayer.Dtos.ExamResultDtos
 {
     public class ExamResultGetByIdDto
     {
+        public int ExamResultId { get; set; }
         public int StudentId { get; set; }
         public int ExamId { get; set; }
         public double ExamScore { get; set; }

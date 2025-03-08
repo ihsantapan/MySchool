@@ -1,0 +1,31 @@
+﻿@model CreateExamResultDto
+@{
+    ViewData["Title"] = "CreateExamResult";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Sınav Sonucu Ekleme Sayfası</h4>
+                <p>Sınav sonucu ekleme işlemleri aşağıdaki panel üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="bordered-table">
+
+                    <form method="post">
+                        <label>Öğrenci ID</label>
+                        <input type="text" class="form-control" asp-for="StudentId" />
+                        <label>Sınav ID</label>
+                        <input type="text" class="form-control" asp-for="ExamId" />
+                        <label>Sınav Notu</label>
+                        <input type="text" class="form-control" asp-for="ExamScore" />
+                        <br />
+                        <button class="btn btn-primary">Sınav Sonucu Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
