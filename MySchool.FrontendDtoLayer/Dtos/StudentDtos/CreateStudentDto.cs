@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.BuisnessLayer.Concrete
+namespace MySchool.FrontendDtoLayer.Dtos.StudentDtos
 {
-    public class StudentGetByIdDto
+    public class CreateStudentDto
     {
-        public int StudentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

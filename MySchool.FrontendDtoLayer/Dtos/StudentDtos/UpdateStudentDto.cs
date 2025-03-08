@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.BuisnessLayer.Concrete
+namespace MySchool.FrontendDtoLayer.Dtos.StudentDtos
 {
-    public class StudentGetByIdDto
+    public class UpdateStudentDto
     {
         public int StudentId { get; set; }
         public string FirstName { get; set; }

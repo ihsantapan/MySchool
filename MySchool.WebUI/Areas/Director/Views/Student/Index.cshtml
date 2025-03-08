@@ -1,0 +1,51 @@
+﻿@model List<ResultStudentDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Director/Views/DirectorLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Öğrenci Listesi</h4>
+                <p>Öğrenci ile ilgili işlemleri aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="bordered-table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Öğrenci ID</th>
+                                <th>Öğrenci Adı</th>
+                                <th>Öğrenci Soyadı</th>
+                                <th>Öğretmen E-Mail</th>
+                                <th>Öğretmen Sınıf ID</th>
+                                <th>Sil</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.StudentId</td>
+                                    <td>@item.FirstName</td>
+                                    <td>@item.LastName</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.ClassId</td>
+                                    <td><a href="/Director/Student/DeleteStudent/@item.StudentId" class="btn btn-warning">Sil</a></td>
+                                    <td><a href="/Director/Student/UpdateStudent/@item.StudentId" class="btn btn-danger">Güncelle</a></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                    <a href="/Director/Student/CreateStudent" class="btn btn-primary">Yeni Öğrenci Ekle</a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
