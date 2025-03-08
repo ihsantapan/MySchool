@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySchool.BuisnessLayer.Abstract;
@@ -6,6 +7,7 @@ using MySchool.DtoLayer.Dtos.TeacherDtos;
 
 namespace MySchool.WebApi.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class TeacherController : ControllerBase

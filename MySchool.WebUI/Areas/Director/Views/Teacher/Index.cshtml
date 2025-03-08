@@ -1,0 +1,48 @@
+﻿@model List<ResultTeacherDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Director/Views/DirectorLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Öğretmen Listesi</h4>
+                <p>Öğretmen ile ilgili işlemleri aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="bordered-table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Öğretmen ID</th>
+                                <th>Öğretmen Adı</th>
+                                <th>Öğretmen Soyadı</th>
+                                <th>Öğretmen E-Mail</th>
+                                <th>Sil</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.TeacherId</td>
+                                    <td>@item.FirstName</td>
+                                    <td>@item.LastName</td>
+                                    <td>@item.Email</td>
+                                    <td><a href="/Director/Teacher/DeleteTeacher/@item.TeacherId" class="btn btn-warning">Sil</a></td>
+                                    <td><a href="/Director/Teacher/UpdateTeacher/@item.TeacherId" class="btn btn-danger">Güncelle</a></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                    <a href="/Director/Teacher/CreateTeacher" class="btn btn-primary">Yeni Öğretmen Ekle</a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\OvioAdmin\help-documentation\assets\.DS_Store" />
+    <None Include="wwwroot\OvioAdmin\help-documentation\assets\blueprint-css\plugins\.DS_Store" />
+    <None Include="wwwroot\OvioAdmin\html\app\et-line-font\fonts\.DS_Store" />
+    <None Include="wwwroot\OvioAdmin\html\charts\et-line-font\fonts\.DS_Store" />
+    <None Include="wwwroot\OvioAdmin\html\component\et-line-font\fonts\.DS_Store" />
+    <None Include="wwwroot\OvioAdmin\html\dist\et-line-font\fonts\.DS_Store" />
+    <None Include="wwwroot\OvioAdmin\html\forms\et-line-font\fonts\.DS_Store" />
+    <None Include="wwwroot\OvioAdmin\html\maps\et-line-font\fonts\.DS_Store" />
+    <None Include="wwwroot\OvioAdmin\html\pages\et-line-font\fonts\.DS_Store" />
+    <None Include="wwwroot\OvioAdmin\html\tables\et-line-font\fonts\.DS_Store" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Director\Data\" />
+    <Folder Include="Areas\Director\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MySchool.FrontendDtoLayer\MySchool.FrontendDtoLayer.csproj" />
+  </ItemGroup>
+
+</Project>
