@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MySchool.BuisnessLayer.ValidationRules.ExamResultValidator
 {
-    public class ExamResultCreateValidator:AbstractValidator<ExamResultCreateDto>
+    public class ExamResultCreateValidator : AbstractValidator<ExamResultCreateDto>
     {
         public ExamResultCreateValidator()
         {
@@ -22,6 +22,10 @@ namespace MySchool.BuisnessLayer.ValidationRules.ExamResultValidator
 
             RuleFor(er => er.ExamId)
                 .GreaterThan(0).WithMessage("Geçerli bir sınav seçilmelidir.");
+
+            RuleFor(er => er.ExamId)
+                .Must((er, examId) => examId != er.StudentId)
+                .WithMessage("Bu öğrenciye ait sınav notu eklenmiş.");
         }
     }
 }
