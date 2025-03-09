@@ -1,0 +1,49 @@
+﻿@model List<ResultAsignmentSubmissionDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Student/Views/StudentLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ödev Listesi</h4>
+
+                <div class="bs-example" data-example-id="bordered-table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Ödev Paylaşım ID</th>
+                                <th>Öğrenci ID</th>
+                                <th>Ödev ID</th>
+                                <th>Dosya Adresi</th>
+                                <th>Ödev Puanı</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.AssignmentSubmissionId</td>
+                                    <td>@item.StudentId</td>
+                                    <td>@item.AssignmentId</td>
+                                    <td>@item.FileUrl</td>
+                                    <td>@item.AssignmentScore</td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+

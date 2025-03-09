@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MySchool.BuisnessLayer.Abstract;
+using MySchool.BuisnessLayer.ValidationRules.ExamValidator;
 using MySchool.DataAccessLayer.Abstract;
 using MySchool.DtoLayer.Dtos.ExamDtos;
 using MySchool.EntityLayer.Concrete;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace MySchool.BuisnessLayer.Concrete
 {
-    public class  ExamManager : IExamService
+    public class ExamManager : IExamService
     {
         private readonly IExamDal _examDal;
         private readonly IMapper _mapper;
@@ -41,15 +43,32 @@ namespace MySchool.BuisnessLayer.Concrete
 
         public async Task TInsertAsync(ExamCreateDto examCreateDto)
         {
-            var value = _mapper.Map<Exam>(examCreateDto);
-            await _examDal.InsertAsync(value);
-
+            var validate = new ExamCreateValidator();
+            var validationResult = validate.Validate(examCreateDto);
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<Exam>(examCreateDto);
+                await _examDal.InsertAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
 
         public async Task TUpdateAsync(ExamUpdateDto examUpdateDto)
         {
-            var value = _mapper.Map<Exam>(examUpdateDto);
-            await _examDal.UpdateAsync(value);
+            var validate = new ExamUpdateValidator();
+            var validationResult = validate.Validate(examUpdateDto);
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<Exam>(examUpdateDto);
+                await _examDal.UpdateAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
     }
 }

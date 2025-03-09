@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MySchool.BuisnessLayer.Abstract;
+using MySchool.BuisnessLayer.ValidationRules.TeacherValidator;
 using MySchool.DataAccessLayer.Abstract;
 using MySchool.DtoLayer.Dtos.TeacherDtos;
 using MySchool.EntityLayer.Concrete;
@@ -41,15 +43,35 @@ namespace MySchool.BuisnessLayer.Concrete
 
         public async Task TInsertAsync(TeacherCreateDto teacherCreateDto)
         {
-            var value = _mapper.Map<Teacher>(teacherCreateDto);
-            await _teacherDal.InsertAsync(value);
+            var validator = new TeacherCreateValidator();
+            var validationResult = validator.Validate(teacherCreateDto);
+
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<Teacher>(teacherCreateDto);
+                await _teacherDal.InsertAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
 
         }
 
         public async Task TUpdateAsync(TeacherUpdateDto teacherUpdateDto)
         {
-            var value = _mapper.Map<Teacher>(teacherUpdateDto);
-            await _teacherDal.UpdateAsync(value);
+            var validator = new TeacherUpdateValidator();
+            var validationResult = validator.Validate(teacherUpdateDto);
+
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<Teacher>(teacherUpdateDto);
+                await _teacherDal.UpdateAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
     }
 }

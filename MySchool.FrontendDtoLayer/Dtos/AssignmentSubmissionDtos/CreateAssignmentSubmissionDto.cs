@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySchool.DtoLayer.Dtos.AssignmentSubmissionDtos
+namespace MySchool.FrontendDtoLayer.Dtos.AssignmentSubmissionDtos
 {
-    public class AssignmentSubmissionResultDto
+    public class CreateAssignmentSubmissionDto
     {
-        public int AssignmentSubmissionId { get; set; }
         public int StudentId { get; set; }
         public int AssignmentId { get; set; }
         public string FileUrl { get; set; }

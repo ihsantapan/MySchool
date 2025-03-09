@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySchool.BuisnessLayer.Abstract;
 using MySchool.DtoLayer.Dtos.School;
 using MySchool.DtoLayer.Dtos.SchoolDtos;
+using System.ComponentModel.DataAnnotations;
 
 namespace MySchool.WebApi.Controllers
 {
@@ -30,8 +32,23 @@ namespace MySchool.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateSchool(SchoolCreateDto schoolCreateDto)
         {
-            await _schoolService.TInsertAsync(schoolCreateDto);
-            return Ok("Okul başarıyla eklendi");
+            try
+            {
+                await _schoolService.TInsertAsync(schoolCreateDto);
+                return Ok("Okul başarıyla eklendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
         }
 
         [HttpDelete("[action]")]
@@ -44,14 +61,30 @@ namespace MySchool.WebApi.Controllers
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdateSchool(SchoolUpdateDto schoolUpdateDto)
         {
-            await _schoolService.TUpdateAsync(schoolUpdateDto);
-            return Ok("Okul başarıyla güncellendi");
+            try
+            {
+                await _schoolService.TUpdateAsync(schoolUpdateDto);
+                return Ok("Okul başarıyla güncellendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+
+                return BadRequest(errors); ;
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
+
         }
 
         [HttpGet("[action]")]
         public async Task<IActionResult> SchoolGetById(int id)
         {
-            var values=await _schoolService.GetByIdAsync(id);
+            var values = await _schoolService.GetByIdAsync(id);
             return Ok(values);
         }
 

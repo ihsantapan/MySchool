@@ -29,8 +29,23 @@ namespace MySchool.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateLesson(LessonCreateDto lessonCreateDto)
         {
-            await _lessonService.TInsertAsync(lessonCreateDto);
-            return Ok("Ders başarıyla eklendi");
+            try
+            {
+                await _lessonService.TInsertAsync(lessonCreateDto);
+                return Ok("Ders başarıyla eklendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                                    .GroupBy(e => e.PropertyName)
+                                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
+
         }
 
         [HttpDelete("[action]")]
@@ -43,8 +58,23 @@ namespace MySchool.WebApi.Controllers
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdateLesson(LessonUpdateDto lessonUpdateDto)
         {
-            await _lessonService.TUpdateAsync(lessonUpdateDto);
-            return Ok("Ders başarıyla güncellendi");
+            try
+            {
+                await _lessonService.TUpdateAsync(lessonUpdateDto);
+                return Ok("Ders başarıyla güncellendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                                    .GroupBy(e => e.PropertyName)
+                                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
+
         }
 
         [HttpGet("[action]")]

@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySchool.BuisnessLayer.Abstract;
 using MySchool.DtoLayer.Dtos.TeacherDtos;
+using System.ComponentModel.DataAnnotations;
 
 namespace MySchool.WebApi.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class TeacherController : ControllerBase
@@ -31,8 +32,24 @@ namespace MySchool.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateTeacher(TeacherCreateDto teacherCreateDto)
         {
-            await _teacherService.TInsertAsync(teacherCreateDto);
-            return Ok("Öğretmen başarıyla eklendi");
+            try
+            {
+                await _teacherService.TInsertAsync(teacherCreateDto);
+                return Ok("Öğretmen başarıyla eklendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
+
         }
 
         [HttpDelete("[action]")]
@@ -45,8 +62,24 @@ namespace MySchool.WebApi.Controllers
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdateTeacher(TeacherUpdateDto teacherUpdateDto)
         {
-            await _teacherService.TUpdateAsync(teacherUpdateDto);
-            return Ok("Öğretmen başarıyla güncellendi");
+            try
+            {
+                await _teacherService.TUpdateAsync(teacherUpdateDto);
+                return Ok("Öğretmen başarıyla güncellendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
+
         }
 
         [HttpGet("[action]")]

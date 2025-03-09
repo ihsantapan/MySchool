@@ -29,8 +29,23 @@ namespace MySchool.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateExamResult(ExamResultCreateDto examResultCreateDto)
         {
-            await _examResultService.TInsertAsync(examResultCreateDto);
-            return Ok("Sınav sonucu başarıyla eklendi");
+            try
+            {
+                await _examResultService.TInsertAsync(examResultCreateDto);
+                return Ok("Sınav sonucu başarıyla eklendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                                    .GroupBy(e => e.PropertyName)
+                                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
+
         }
 
         [HttpDelete("[action]")]
@@ -43,8 +58,22 @@ namespace MySchool.WebApi.Controllers
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdateExamResult(ExamResultUpdateDto examResultUpdateDto)
         {
-            await _examResultService.TUpdateAsync(examResultUpdateDto);
-            return Ok("Sınav sonucu başarıyla güncellendi");
+            try
+            {
+                await _examResultService.TUpdateAsync(examResultUpdateDto);
+                return Ok("Sınav sonucu başarıyla güncellendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                                    .GroupBy(e => e.PropertyName)
+                                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
         }
 
         [HttpGet("[action]")]

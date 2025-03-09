@@ -29,8 +29,22 @@ namespace MyPrincipal.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreatePrincipal(PrincipalCreateDto principalCreateDto)
         {
-            await _principalService.TInsertAsync(principalCreateDto);
-            return Ok("Müdür başarıyla eklendi");
+            try
+            {
+                await _principalService.TInsertAsync(principalCreateDto);
+                return Ok("Müdür başarıyla eklendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                                    .GroupBy(e => e.PropertyName)
+                                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
         }
 
         [HttpDelete("[action]")]
@@ -43,8 +57,24 @@ namespace MyPrincipal.WebApi.Controllers
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdatePrincipal(PrincipalUpdateDto principalUpdateDto)
         {
-            await _principalService.TUpdateAsync(principalUpdateDto);
-            return Ok("Müdür başarıyla güncellendi");
+            try
+            {
+                await _principalService.TUpdateAsync(principalUpdateDto);
+                return Ok("Müdür başarıyla güncellendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+
+                return BadRequest(errors); ;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
+
         }
 
         [HttpGet("[action]")]

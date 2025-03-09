@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySchool.BuisnessLayer.Concrete;
+using MySchool.BuisnessLayer.ValidationRules.StudentValidator;
+using FluentValidation;
 
 namespace MyStudent.BuisnessLayer.Concrete
 {
@@ -42,15 +44,33 @@ namespace MyStudent.BuisnessLayer.Concrete
 
         public async Task TInsertAsync(StudentCreateDto studentCreateDto)
         {
-            var value = _mapper.Map<Student>(studentCreateDto);
-            await _studentDal.InsertAsync(value);
+            var validator = new StudentCreateValidator();
+            var validationResult = validator.Validate(studentCreateDto);
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<Student>(studentCreateDto);
+                await _studentDal.InsertAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
 
         }
 
         public async Task TUpdateAsync(StudentUpdateDto studentUpdateDto)
         {
-            var value = _mapper.Map<Student>(studentUpdateDto);
-            await _studentDal.UpdateAsync(value);
+            var validator = new StudentUpdateValidator();
+            var validationResult = validator.Validate(studentUpdateDto);
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<Student>(studentUpdateDto);
+                await _studentDal.UpdateAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
     }
 }

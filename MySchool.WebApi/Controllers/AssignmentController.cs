@@ -30,8 +30,22 @@ namespace MySchool.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateAssignment(AssignmentCreateDto assignmentCreateDto)
         {
-            await _assignmentService.TInsertAsync(assignmentCreateDto);
-            return Ok("Ödev başarıyla eklendi");
+            try
+            {
+                await _assignmentService.TInsertAsync(assignmentCreateDto);
+                return Ok("Ödev başarıyla eklendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                                    .GroupBy(e => e.PropertyName)
+                                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
         }
 
         [HttpDelete("[action]")]
@@ -44,8 +58,22 @@ namespace MySchool.WebApi.Controllers
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdateAssignment(AssignmentUpdateDto assignmentUpdateDto)
         {
-            await _assignmentService.TUpdateAsync(assignmentUpdateDto);
-            return Ok("Ödev başarıyla güncellendi");
+            try
+            {
+                await _assignmentService.TUpdateAsync(assignmentUpdateDto);
+                return Ok("Ödev başarıyla güncellendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                                    .GroupBy(e => e.PropertyName)
+                                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
         }
 
         [HttpGet("[action]")]

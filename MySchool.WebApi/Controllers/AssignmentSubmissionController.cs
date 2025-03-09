@@ -30,8 +30,23 @@ namespace MySchool.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateAssignmentSubmission(AssignmentSubmissionCreateDto assignmentSubmissionCreateDto)
         {
-            await _assignmentSubmissionService.TInsertAsync(assignmentSubmissionCreateDto);
-            return Ok("Müdür başarıyla eklendi");
+            try
+            {
+                await _assignmentSubmissionService.TInsertAsync(assignmentSubmissionCreateDto);
+                return Ok("Müdür başarıyla eklendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                                    .GroupBy(e => e.PropertyName)
+                                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
+
         }
 
         [HttpDelete("[action]")]
@@ -44,8 +59,23 @@ namespace MySchool.WebApi.Controllers
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdateAssignmentSubmission(AssignmentSubmissionUpdateDto assignmentSubmissionUpdateDto)
         {
-            await _assignmentSubmissionService.TUpdateAsync(assignmentSubmissionUpdateDto);
-            return Ok("Müdür başarıyla güncellendi");
+            try
+            {
+                await _assignmentSubmissionService.TUpdateAsync(assignmentSubmissionUpdateDto);
+                return Ok("Müdür başarıyla güncellendi");
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors
+                                    .GroupBy(e => e.PropertyName)
+                                    .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Sunucu hatası: " + ex.Message);
+            }
+
         }
 
         [HttpGet("[action]")]

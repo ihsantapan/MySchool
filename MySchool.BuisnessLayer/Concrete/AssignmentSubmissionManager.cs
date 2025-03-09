@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MySchool.BuisnessLayer.Abstract;
+using MySchool.BuisnessLayer.ValidationRules.AssignmentSubmissionValidator;
 using MySchool.DataAccessLayer.Abstract;
 using MySchool.DtoLayer.Dtos.AssignmentSubmission;
 using MySchool.DtoLayer.Dtos.AssignmentSubmissionDtos;
@@ -42,15 +44,33 @@ namespace MyAssignmentSubmission.BuisnessLayer.Concrete
 
         public async Task TInsertAsync(AssignmentSubmissionCreateDto assignmentSubmissionCreateDto)
         {
-            var value = _mapper.Map<AssignmentSubmission>(assignmentSubmissionCreateDto);
-            await _assignmentSubmissionDal.InsertAsync(value);
-
+            var validator = new AssignmentSubmissionCreateValidator();
+            var validationResult = validator.Validate(assignmentSubmissionCreateDto);
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<AssignmentSubmission>(assignmentSubmissionCreateDto);
+                await _assignmentSubmissionDal.InsertAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
 
         public async Task TUpdateAsync(AssignmentSubmissionUpdateDto assignmentSubmissionUpdateDto)
         {
-            var value = _mapper.Map<AssignmentSubmission>(assignmentSubmissionUpdateDto);
-            await _assignmentSubmissionDal.UpdateAsync(value);
+            var validator = new AssignmentSubmissionUpdateValidator();
+            var validationResult = validator.Validate(assignmentSubmissionUpdateDto);
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<AssignmentSubmission>(assignmentSubmissionUpdateDto);
+                await _assignmentSubmissionDal.UpdateAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
         }
     }
 }

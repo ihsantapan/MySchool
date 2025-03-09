@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MySchool.BuisnessLayer.Abstract;
+using MySchool.BuisnessLayer.ValidationRules.ClassValidator;
 using MySchool.DataAccessLayer.Abstract;
 using MySchool.DtoLayer.Dtos.Class;
 using MySchool.DtoLayer.Dtos.ClassDtos;
@@ -42,15 +44,32 @@ namespace MyClass.BuisnessLayer.Concrete
 
         public async Task TInsertAsync(ClassCreateDto classCreateDto)
         {
-            var value = _mapper.Map<Class>(classCreateDto);
-            await _classDal.InsertAsync(value);
-
+            var validator = new ClassCreateValidator();
+            var validationResult = validator.Validate(classCreateDto);
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<Class>(classCreateDto);
+                await _classDal.InsertAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
 
         public async Task TUpdateAsync(ClassUpdateDto classUpdateDto)
         {
-            var value = _mapper.Map<Class>(classUpdateDto);
-            await _classDal.UpdateAsync(value);
+            var validator = new ClassUpdateValidator();
+            var validationResult = validator.Validate(classUpdateDto);
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<Class>(classUpdateDto);
+                await _classDal.UpdateAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
     }
 }

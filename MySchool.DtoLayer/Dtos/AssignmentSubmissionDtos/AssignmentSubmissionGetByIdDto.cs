@@ -8,6 +8,7 @@ namespace MySchool.DtoLayer.Dtos.AssignmentSubmissionDtos
 {
     public class AssignmentSubmissionGetByIdDto
     {
+        public int AssignmentSubmissionId { get; set; }
         public int StudentId { get; set; }
         public int AssignmentId { get; set; }
         public string FileUrl { get; set; }

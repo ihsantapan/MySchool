@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MySchool.BuisnessLayer.Abstract;
+using MySchool.BuisnessLayer.ValidationRules.SchoolValidator;
 using MySchool.DataAccessLayer.Abstract;
 using MySchool.DtoLayer.Dtos.School;
 using MySchool.DtoLayer.Dtos.SchoolDtos;
@@ -31,7 +33,7 @@ namespace MySchool.BuisnessLayer.Concrete
 
         public async Task<SchoolGetByIdDto> GetByIdAsync(int id)
         {
-            var values= await _schoolDal.GetByIdAsync(id);
+            var values = await _schoolDal.GetByIdAsync(id);
             return _mapper.Map<SchoolGetByIdDto>(values);
         }
 
@@ -42,15 +44,33 @@ namespace MySchool.BuisnessLayer.Concrete
 
         public async Task TInsertAsync(SchoolCreateDto schoolCreateDto)
         {
-            var value=_mapper.Map<School>(schoolCreateDto);
-            await _schoolDal.InsertAsync(value);
+            var validator = new SchoolCreateValidator();
+            var validationResult = validator.Validate(schoolCreateDto);
 
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<School>(schoolCreateDto);
+                await _schoolDal.InsertAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
 
         public async Task TUpdateAsync(SchoolUpdateDto schoolUpdateDto)
         {
-            var value = _mapper.Map<School>(schoolUpdateDto);
-            await _schoolDal.UpdateAsync(value);
+            var validator = new SchoolUpdateValidator();
+            var validationResult = validator.Validate(schoolUpdateDto);
+            if (validationResult.IsValid)
+            {
+                var value = _mapper.Map<School>(schoolUpdateDto);
+                await _schoolDal.UpdateAsync(value);
+            }
+            else
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
     }
 }
